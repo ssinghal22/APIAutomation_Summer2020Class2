@@ -18,7 +18,7 @@ class CareerPortalTests(unittest.TestCase):
         positions = requests.get(self.base_url + '/positions')
         json_positions = json.loads(positions.text)
 
-        self.assertEqual(len(json_positions), 5)
+        self.assertEqual(5, len(json_positions))
 
         result = requests.post(self.base_url + '/login', json={"email": "student@example.com", "password": "welcome"})
         self.assertEqual(200, result.status_code)
@@ -34,16 +34,16 @@ class CareerPortalTests(unittest.TestCase):
         verify_response = requests.post(self.base_url + '/verify', headers=verify_header)
         verify_content = json.loads(verify_response.content)
 
-        user_id = verify_content['id']
-        email = verify_content['email']
+        auser_id = verify_content['id']
+        aemail = verify_content['email']
 
-        self.assertTrue(email == 'student@example.com')
-        self.assertEqual(8, user_id)
+        self.assertTrue('student@example.com' == aemail)
+        self.assertEqual(8, auser_id)
 
-        my_positions = requests.get(self.base_url + '/candidates/' + str(user_id) + '/positions')
+        my_positions = requests.get(self.base_url + '/candidates/' + str(auser_id) + '/positions')
         json_my_positions = json.loads(my_positions.text)
 
-        self.assertEqual(len(json_my_positions), 2)
+        self.assertEqual(3, len(json_my_positions))
 
 
 if __name__ == '__main__':

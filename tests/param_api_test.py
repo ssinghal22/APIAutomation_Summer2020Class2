@@ -28,18 +28,18 @@ class MyPositionsTests(unittest.TestCase):
         self.authorization_header.update(self.headers)
 
     @parameterized.expand(data)
-    def test_get_candidate_positions(self, test_name, user_id, status_code, reason, expected_error_message):
+    def test_get_candidate_positions(self, test_name, auser_id, astatus_code, areason, aexpected_error_message):
 
-        my_positions = self.get_candidate_positions(user_id)
-        self.assertEqual(status_code, my_positions.status_code)
-        self.assertEqual(reason, my_positions.reason)
+        my_positions = self.get_candidate_positions(auser_id)
+        self.assertEqual(astatus_code, my_positions.status_code)
+        self.assertEqual(areason, my_positions.reason)
 
-        if expected_error_message:
+        if aexpected_error_message:
             json_my_positions = json.loads(my_positions.text)
-            self.assertEqual(json_my_positions['code'], expected_error_message)
+            self.assertEqual(aexpected_error_message, json_my_positions['code'])
 
-    def get_candidate_positions(self, user_id):
-        return requests.get(self.base_url + '/candidates/' + str(user_id) + '/positions', headers = self.authorization_header)
+    def get_candidate_positions(self, auser_id):
+        return requests.get(self.base_url + '/candidates/' + str(auser_id) + '/positions', headers = self.authorization_header)
 
 if __name__ == '__main__':
     unittest.main()
